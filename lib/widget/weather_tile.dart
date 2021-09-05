@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class WeatherTile extends StatelessWidget {
-  final IconData icn;
+  final IconData? icn;
   final String title;
   final String subtitle;
 
-  const WeatherTile(
-      {Key key,
-      @required this.icn,
-      @required this.subtitle,
-      @required this.title})
-      : super(key: key);
+  const WeatherTile({
+    Key? key,
+    this.icn,
+    this.subtitle = "",
+    this.title = "",
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

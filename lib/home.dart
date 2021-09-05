@@ -76,8 +76,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_php/widget/main_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:weather_app_api/widget/main_widget.dart';
 // import 'dart:convert';
 
 Future<WeatherInfo> fetchWeather() async {
@@ -105,13 +105,13 @@ class WeatherInfo {
   final double windSpeed;
 
   WeatherInfo({
-    this.humidity,
-    this.location,
-    this.temp,
-    this.tempMax,
-    this.tempMin,
-    this.weather,
-    this.windSpeed,
+    this.humidity = 0,
+    this.location = "",
+    this.temp = 0.0,
+    this.tempMax = 0.0,
+    this.tempMin = 0.0,
+    this.weather = "",
+    this.windSpeed = 0.0,
   });
 
   factory WeatherInfo.fromJson(Map<String, dynamic> json) {
@@ -127,14 +127,14 @@ class WeatherInfo {
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  Future<WeatherInfo> futureWeather;
+  late Future<WeatherInfo> futureWeather;
 
   @override
   void initState() {
@@ -145,27 +145,35 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            "Weather API",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.white,
+        ),
         body: FutureBuilder<WeatherInfo>(
-      future: futureWeather,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return MainWidget(
-            location: snapshot.data.location,
-            temp: snapshot.data.temp,
-            tempMax: snapshot.data.tempMax,
-            tempMin: snapshot.data.tempMin,
-            weather: snapshot.data.weather,
-            humidity: snapshot.data.humidity,
-            windSpeed: snapshot.data.windSpeed,
-          );
-        } else if (snapshot.hasError) {
-          return Center(
-            child: Text("${snapshot.error}"),
-          );
-        } else {
-          return Center(child: CircularProgressIndicator());
-        }
-      },
-    ));
+          future: futureWeather,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return MainWidget(
+                location: snapshot.data!.location,
+                temp: snapshot.data!.temp,
+                tempMax: snapshot.data!.tempMax,
+                tempMin: snapshot.data!.tempMin,
+                weather: snapshot.data!.weather,
+                humidity: snapshot.data!.humidity,
+                windSpeed: snapshot.data!.windSpeed,
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text("${snapshot.error}"),
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ));
   }
 }

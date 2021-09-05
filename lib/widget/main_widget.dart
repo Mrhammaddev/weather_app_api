@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_php/widget/weather_tile.dart';
+import 'package:weather_app_api/widget/weather_tile.dart';
 
 class MainWidget extends StatelessWidget {
   final String location;
@@ -10,14 +10,14 @@ class MainWidget extends StatelessWidget {
   final int humidity;
   final double windSpeed;
   const MainWidget({
-    Key key,
-    this.humidity,
-    this.location,
-    this.temp,
-    this.tempMax,
-    this.tempMin,
-    this.weather,
-    this.windSpeed,
+    Key? key,
+    this.humidity = 0,
+    this.location = "",
+    this.temp = 0.0,
+    this.tempMax = 0.0,
+    this.tempMin = 0.0,
+    this.weather = "",
+    this.windSpeed = 0.0,
   }) : super(key: key);
 
   @override
